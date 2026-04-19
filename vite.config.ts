@@ -18,6 +18,7 @@ const config = defineConfig({
       },
     }),
   ],
+<<<<<<< HEAD
   server: {
     proxy: {
       '/ingest': {
@@ -28,6 +29,8 @@ const config = defineConfig({
       },
     },
   },
+=======
+>>>>>>> 66e0d11 (fetch data)
 })
 
 export default config
