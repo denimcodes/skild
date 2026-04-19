@@ -7,7 +7,7 @@ import {
   Copy,
   MessagesSquare,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SkillCard = ({
   authorEmail,
@@ -19,11 +19,24 @@ const SkillCard = ({
   title,
 }: SkillRecord) => {
   const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(installCommand);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    },
+    [],
+  );
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard?.writeText(installCommand);
+      setCopied(true);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // optionally surface an error toast
+    }
   };
 
   return (
@@ -51,8 +64,10 @@ const SkillCard = ({
           <div className="author">
             <img src="/logo512.png" alt="author avatar" className="avatar" />
             <div className="author-copy">
-              <p>Adrian</p>
-              <p>{new Date(createdAt as string).toLocaleDateString()}</p>
+              <p>Adrian</p>+{" "}
+              <p>
+                {createdAt ? new Date(createdAt).toLocaleDateString() : "—"}
+              </p>
             </div>
           </div>
 
@@ -98,8 +113,13 @@ const SkillCard = ({
               <span>Open</span>
               <ArrowUpRight size={14} />
             </Link>
-            
-            <button type="button" className="save" aria-label="Saved state" disabled>
+
+            <button
+              type="button"
+              className="save"
+              aria-label="Saved state"
+              disabled
+            >
               <Bookmark size={16} />
             </button>
           </div>
