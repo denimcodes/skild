@@ -11,8 +11,8 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import ClerkProvider from '../integrations/clerk/provider'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
-import Navbar from '#/components/navbar'
-import Crosshair from '#/components/crosshair'
+import Navbar from '#/components/Navbar'
+import Crosshair from '#/components/Crosshair'
 
 interface MyRouterContext {
   queryClient: QueryClient
