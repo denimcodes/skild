@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <needed to load theme> */
 import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { PostHogProvider } from "@posthog/react";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -9,10 +9,9 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import Navbar from "#/components/Navbar";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
-import Navbar from "#/components/Navbar";
-import { Crosshair } from "lucide-react";
 
 interface MyRouterContext {
 	queryClient: QueryClient;

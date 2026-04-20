@@ -1,10 +1,10 @@
 import { usePostHog } from "@posthog/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Router, Terminal } from "lucide-react";
-import SkillCard from "#/components/SkillCard";
-import { dummySkills } from "#/lib/mock-data";
 import { createServerFn } from "@tanstack/react-start";
+import { Terminal } from "lucide-react";
+import SkillCard from "#/components/SkillCard";
 import { getSkills } from "#/db/queries";
+import { dummySkills } from "#/lib/mock-data";
 
 const fetchSkills = createServerFn({method: 'GET'}).handler(async () => {
 	try {
