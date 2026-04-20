@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { usePostHog } from "@posthog/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Terminal } from "lucide-react";
@@ -67,16 +66,4 @@ function App() {
 			</section>
 		</div>
 	);
-=======
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/')({ component: App })
-
-function App() {
-  return (
-    <main>
-      <h1>Hello from Tanstack Start</h1>
-    </main>
-  )
->>>>>>> 66e0d11 (fetch data)
 }
