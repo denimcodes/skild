@@ -1,245 +1,98 @@
-Welcome to your new TanStack Start app! 
+# Skild
 
-# Getting Started
+Skild is a full-stack web app for discovering and publishing reusable **AI agent skills**.
 
-To run this application:
+It is intentionally built as a portfolio-quality project that demonstrates product thinking, modern frontend architecture, backend data modeling, authentication, and analytics instrumentation.
+
+## Why this project is strong for resumes/interviews
+
+- **Clear product narrative**: “GitHub for AI agent skills” with browse + publish workflows.
+- **Modern TypeScript stack**: React 19 + TanStack Start + file-based routing.
+- **Full-stack ownership**: UI, route architecture, DB schema/migrations, and seed scripts.
+- **Production-minded integrations**: Clerk auth and PostHog event tracking.
+- **Demonstrates craft**: reusable components, utility patterns, and structured styling.
+
+## Core Features
+
+- Marketing-style landing page with featured/recent skills
+- Skill cards with interaction states and copy-to-clipboard install commands
+- Auth-aware navigation (signed-in vs signed-out)
+- Analytics events for key product actions (browse, publish, sign-in, copy command)
+- Database-ready foundation with Drizzle ORM + migrations + seed support
+
+## Tech Stack
+
+- **Frontend**: React 19, TanStack Start, TanStack Router, Tailwind CSS v4
+- **Auth**: Clerk
+- **Analytics**: PostHog
+- **Data Layer**: Drizzle ORM + Postgres
+- **Tooling**: TypeScript, Vite, Vitest, Biome, pnpm
+
+## Architecture Highlights
+
+- Route-first app structure via TanStack file-based routing in `src/routes`
+- Reusable UI components in `src/components`
+- Data access patterns in `src/db`
+- Seed and migration workflows via `scripts/` and `drizzle/`
+
+## Quick Start
+
+### 1) Install dependencies
 
 ```bash
 pnpm install
+```
+
+### 2) Configure environment variables
+
+Create `.env.local` and set:
+
+- `VITE_CLERK_PUBLISHABLE_KEY`
+- `VITE_PUBLIC_POSTHOG_PROJECT_TOKEN`
+- `VITE_PUBLIC_POSTHOG_HOST` (optional, defaults to `https://us.posthog.com`)
+- Your Postgres connection variables for Drizzle/Supabase
+
+### 3) Run the app
+
+```bash
 pnpm dev
 ```
 
-# Building For Production
+Open `http://localhost:3000`.
 
-To build this application for production:
-
-```bash
-pnpm build
-```
-
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+## Database Commands
 
 ```bash
-pnpm test
+pnpm db:generate   # Generate Drizzle SQL from schema
+pnpm db:migrate    # Apply migrations
+pnpm db:seed       # Seed sample data
+pnpm db:studio     # Open Drizzle Studio
 ```
 
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
+## Quality Commands
 
 ```bash
-pnpm lint
-pnpm format
-pnpm check
+pnpm test      # Run unit tests
+pnpm lint      # Lint with Biome
+pnpm check     # Lint + formatting checks
+pnpm build     # Production build
 ```
 
+## Interview Walkthrough Talking Points
 
-## Setting up Clerk
+If you are presenting this project in an interview, focus on:
 
-- Set the `VITE_CLERK_PUBLISHABLE_KEY` in your `.env.local`.
+1. **Product framing**: why reusable agent skills matter for AI developer workflows.
+2. **Routing + architecture**: how TanStack Start keeps route concerns explicit and scalable.
+3. **Instrumentation strategy**: which PostHog events were added and how they guide product decisions.
+4. **Auth boundary**: how Clerk supports identity and user-scoped actions.
+5. **Backend readiness**: Drizzle schema/migration approach and how you would extend it.
+6. **Next iteration plan**: search/ranking, user profiles, comments, install metrics, moderation.
 
+## Potential Resume Bullet (copy/adapt)
 
-## Shadcn
+- Built **Skild**, a full-stack TypeScript platform for publishing and discovering reusable AI agent skills, using React 19 + TanStack Start + Drizzle + Postgres + Clerk + PostHog, with analytics-driven UX instrumentation and database-backed feature foundations.
 
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
+---
 
-```bash
-pnpm dlx shadcn@latest add button
-```
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
-
-## Drizzle ORM + Supabase Postgres
-
-Drizzle is configured to read your Postgres URL from one of these env vars:
-
-- `DATABASE_URL` (preferred)
-- `SUPABASE_DATABASE_URL` (fallback)
-
-If you already have your Supabase Postgres connection string in `.env`, map it to one of the variables above.
-
-### Drizzle commands
-
-```bash
-pnpm db:generate
-pnpm db:migrate
-pnpm db:studio
-pnpm db:seed
-```
-
-### Where the integration lives
-
-- Drizzle config: `drizzle.config.ts`
-- Database client: `src/db/index.ts`
-- Schema definitions: `src/db/schema.ts`
-- Insert helpers: `src/db/mutations.ts`
-- Read helpers: `src/db/queries.ts`
-- Seed script: `src/db/seed.ts`
+If you want, I can also create a **one-page interview cheat sheet** (system design + tradeoffs + roadmap) from this repo.
