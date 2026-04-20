@@ -74,8 +74,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <header>
                 <div className="frame">
                   <Navbar />
-                  <Crosshair />
-                  <Crosshair />
                 </div>
               </header>
 

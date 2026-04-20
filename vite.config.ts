@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 import { devtools } from '@tanstack/devtools-vite'
 
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -18,7 +18,6 @@ const config = defineConfig({
       },
     }),
   ],
-<<<<<<< HEAD
   server: {
     proxy: {
       '/ingest': {
@@ -29,8 +28,6 @@ const config = defineConfig({
       },
     },
   },
-=======
->>>>>>> 66e0d11 (fetch data)
 })
 
 export default config
