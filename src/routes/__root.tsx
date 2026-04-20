@@ -1,5 +1,4 @@
 /** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
-
 import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { PostHogProvider } from "@posthog/react";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -10,10 +9,10 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import Crosshair from "#/components/Crosshair";
-import Navbar from "#/components/Navbar";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
+import Navbar from "#/components/Navbar";
+import { Crosshair } from "lucide-react";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
@@ -51,55 +50,55 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<head>
-				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-				<HeadContent />
-			</head>
-			<body className="font-sans antialiased wrap-anywhere">
-				<PostHogProvider
-					apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN ?? ""}
-					options={{
-						api_host: "/ingest",
-						ui_host:
-							import.meta.env.VITE_PUBLIC_POSTHOG_HOST ||
-							"https://us.posthog.com",
-						defaults: "2025-05-24",
-						capture_exceptions: true,
-						debug: import.meta.env.DEV,
-					}}
-				>
-					<ClerkProvider>
-						<div id="root-layout">
-							<header>
-								<div className="frame">
-									<Navbar />
-									<Crosshair />
-									<Crosshair />
-								</div>
-							</header>
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <HeadContent />
+      </head>
+      <body className="font-sans antialiased wrap-anywhere">
+        <PostHogProvider
+          apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_TOKEN ?? ""}
+          options={{
+            api_host: "/ingest",
+            ui_host:
+              import.meta.env.VITE_PUBLIC_POSTHOG_HOST ||
+              "https://us.posthog.com",
+            defaults: "2025-05-24",
+            capture_exceptions: true,
+            debug: import.meta.env.DEV,
+          }}
+        >
+          <ClerkProvider>
+            <div id="root-layout">
+              <header>
+                <div className="frame">
+                  <Navbar />
+                  <Crosshair />
+                  <Crosshair />
+                </div>
+              </header>
 
-							<main>
-								<div className="frame">{children}</div>
-							</main>
-						</div>
-						<TanStackDevtools
-							config={{
-								position: "bottom-right",
-							}}
-							plugins={[
-								{
-									name: "Tanstack Router",
-									render: <TanStackRouterDevtoolsPanel />,
-								},
-								TanStackQueryDevtools,
-							]}
-						/>
-					</ClerkProvider>
-				</PostHogProvider>
-				<Scripts />
-			</body>
-		</html>
-	);
-}
+              <main>
+                <div className="frame">{children}</div>
+              </main>
+            </div>
+            <TanStackDevtools
+              config={{
+                position: "bottom-right",
+              }}
+              plugins={[
+                {
+                  name: "Tanstack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                TanStackQueryDevtools,
+              ]}
+            />
+          </ClerkProvider>
+        </PostHogProvider>
+        <Scripts />
+      </body>
+    </html>
+  )
+};
