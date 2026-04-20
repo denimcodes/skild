@@ -9,10 +9,13 @@ import { defineConfig } from 'vite'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
+  build: {
+    outDir: '.output',
+  },
   plugins: [
     devtools(),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({ buildConfig: { outputDir: '.output' } }),
     nitro(),
     viteReact({
       babel: {
