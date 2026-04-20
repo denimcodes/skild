@@ -1,19 +1,32 @@
 import { usePostHog } from "@posthog/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Terminal } from "lucide-react";
+import { Router, Terminal } from "lucide-react";
 import SkillCard from "#/components/SkillCard";
 import { dummySkills } from "#/lib/mock-data";
+import { createServerFn } from "@tanstack/react-start";
+import { getSkills } from "#/db/queries";
 
-export const Route = createFileRoute("/")({ component: App });
+const fetchSkills = createServerFn({method: 'GET'}).handler(async () => {
+	try {
+	return await getSkills({
+		limit: 10,
+	})
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+})
+export const Route = createFileRoute("/")({ component: App, loader: () => fetchSkills() });
 
-function App() {
+async function App() {
 	const posthog = usePostHog();
+	const skills = Route.useLoaderData();;
 
 	return (
 		<div id="home">
 			<section className="hero">
 				<div className="copy">
-					<h1>
+				<h1>
 						The Registry for <br />
 						<span className="text-gradient">Agentic Intelligence</span>
 					</h1>
@@ -55,7 +68,7 @@ function App() {
 				<div>
 					{dummySkills.length > 0 ? (
 						<div className="skills-grid">
-							{dummySkills.map((skill) => (
+							{skills.map((skill) => (
 								<SkillCard key={skill.id} {...skill} />
 							))}
 						</div>

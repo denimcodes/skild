@@ -1,3 +1,4 @@
+import type { GetSkillsResult } from "#/db/queries";
 import { usePostHog } from "@posthog/react";
 import { Link } from "@tanstack/react-router";
 import {
@@ -10,18 +11,21 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+type SkillCardProps = GetSkillsResult[number];
+
 const SkillCard = ({
-	authorEmail,
-	category,
+	author,
 	createdAt,
 	description,
 	installCommand,
 	tags,
 	title,
-}: SkillRecord) => {
+}: SkillCardProps) => {
 	const posthog = usePostHog();
 	const [copied, setCopied] = useState(false);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const category = tags[0] ?? "General";
 
 	useEffect(
 		() => () => {
@@ -32,7 +36,7 @@ const SkillCard = ({
 
 	const handleCopy = async () => {
 		try {
-			await navigator.clipboard?.writeText(installCommand);
+			await navigator.clipboard?.writeText(installCommand ?? "");
 			setCopied(true);
 			if (timeoutRef.current) clearTimeout(timeoutRef.current);
 			timeoutRef.current = setTimeout(() => setCopied(false), 2000);
@@ -69,9 +73,9 @@ const SkillCard = ({
 			<div className="body">
 				<div className="meta">
 					<div className="author">
-						<img src="/logo512.png" alt="author avatar" className="avatar" />
+						<img src={author?.imageUrl || "/logo512.png"} alt={`${author?.username} avatar`} className="avatar" />
 						<div className="author-copy">
-							<p>Adrian</p>{" "}
+							<p>{author?.username}</p>{" "}
 							<p>
 								{createdAt ? new Date(createdAt).toLocaleDateString() : "—"}
 							</p>
@@ -111,7 +115,7 @@ const SkillCard = ({
 
 						<div className="comments">
 							<MessagesSquare size={14} />
-							<span>{authorEmail ? 1 : 0}</span>
+							<span>{author?.email ? 1 : 0}</span>
 						</div>
 					</div>
 

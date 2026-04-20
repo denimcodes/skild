@@ -35,3 +35,5 @@ export async function getSkills({
     .orderBy(desc(skills.createdAt))
     .limit(limit)
 }
+
+export type GetSkillsResult = Awaited<ReturnType<typeof getSkills>>;
