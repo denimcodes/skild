@@ -241,4 +241,5 @@ pnpm db:seed
 - Database client: `src/db/index.ts`
 - Schema definitions: `src/db/schema.ts`
 - Insert helpers: `src/db/mutations.ts`
+- Read helpers: `src/db/queries.ts`
 - Seed script: `src/db/seed.ts`
