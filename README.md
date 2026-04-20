@@ -216,3 +216,29 @@ Files prefixed with `demo` can be safely deleted. They are there to provide a st
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
 
 For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+
+## Drizzle ORM + Supabase Postgres
+
+Drizzle is configured to read your Postgres URL from one of these env vars:
+
+- `DATABASE_URL` (preferred)
+- `SUPABASE_DATABASE_URL` (fallback)
+
+If you already have your Supabase Postgres connection string in `.env`, map it to one of the variables above.
+
+### Drizzle commands
+
+```bash
+pnpm db:generate
+pnpm db:migrate
+pnpm db:studio
+pnpm db:seed
+```
+
+### Where the integration lives
+
+- Drizzle config: `drizzle.config.ts`
+- Database client: `src/db/index.ts`
+- Schema definitions: `src/db/schema.ts`
+- Insert helpers: `src/db/mutations.ts`
+- Seed script: `src/db/seed.ts`
