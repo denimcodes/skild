@@ -1,27 +1,37 @@
-import { desc, ilike, or } from 'drizzle-orm'
+import { desc, eq, ilike, or } from 'drizzle-orm'
 import { db } from './index'
-import { skills } from './schema'
+import { skills, users } from './schema'
 
-import type { Skill } from './schema'
-
-export type GetSkillsInput = {
-  search?: string
-}
-
-export async function getSkills({ search }: GetSkillsInput = {}): Promise<Skill[]> {
-  const searchTerm = search?.trim()
-
-  return db
-    .select()
+export async function getSkills({
+  searchTerm = '',
+  limit = 10,
+}: {
+  searchTerm?: string
+  limit?: number
+}) {
+  return await db
+    .select({
+      id: skills.id,
+      title: skills.title,
+      description: skills.description,
+      tags: skills.tags,
+      createdAt: skills.createdAt,
+      installCommand: skills.installCommand,
+      author: {
+        username: users.username,
+        imageUrl: users.imageUrl,
+        clerkId: users.clerkId,
+        email: users.email,
+      },
+    })
     .from(skills)
+    .leftJoin(users, eq(skills.authorClerkId, users.clerkId))
     .where(
-      searchTerm
-        ? or(
-            ilike(skills.title, `%${searchTerm}%`),
-            ilike(skills.description, `%${searchTerm}%`),
-          )
-        : undefined,
+      or(
+        ilike(skills.title, `%${searchTerm}%`),
+        ilike(skills.description, `%${searchTerm}%`),
+      ),
     )
     .orderBy(desc(skills.createdAt))
-    .limit(10)
+    .limit(limit)
 }
