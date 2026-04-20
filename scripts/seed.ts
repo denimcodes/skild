@@ -1,7 +1,6 @@
+import { insertSkill, insertUser } from '#/db/mutations'
+import { dummySkills } from '#/lib/mock-data'
 import 'dotenv/config'
-
-import { insertSkill, insertUser } from './mutations'
-import { dummySkills } from '../lib/mock-data.tsx'
 
 const primaryUser = {
   clerkId: 'user_3Ca3mTLS0AV8JHbUrgSq7zXketT',

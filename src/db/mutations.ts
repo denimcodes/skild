@@ -1,7 +1,6 @@
 import { db } from './index'
-import { skills, users } from './schema'
-
 import type { NewSkill, NewUser, Skill, User } from './schema'
+import { skills, users } from './schema'
 
 export async function insertUser(values: NewUser): Promise<User> {
   const [user] = await db
