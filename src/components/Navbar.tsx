@@ -39,7 +39,7 @@ const Navbar = () => {
 						onClick={() => posthog.capture("sign_in_clicked")}
 					>
 						<LogIn size={16} />
-						Sign inn
+						Sign in
 					</Link>
 				</Show>
 			</div>
